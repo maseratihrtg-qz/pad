@@ -27,7 +27,6 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
         }
 
         body {
@@ -39,11 +38,21 @@
             align-items: center;
             color: white;
             overflow-x: hidden;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+        }
+
+        /* 가로 모드 (아이패드)에서만 스크롤 방지 */
+        @media (orientation: landscape) and (min-width: 768px) {
+            html, body {
+                overflow: hidden;
+            }
+            
+            body {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
         }
 
         .container {
@@ -53,7 +62,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+        }
+
+        /* 가로 모드에서만 overflow hidden */
+        @media (orientation: landscape) and (min-width: 768px) {
+            .container {
+                overflow: hidden;
+            }
         }
 
         /* 시작 화면 */
@@ -131,7 +146,13 @@
             background: #000000;
             width: 100%;
             height: 100%;
-            overflow: hidden;
+        }
+
+        /* 가로 모드에서만 overflow hidden */
+        @media (orientation: landscape) and (min-width: 768px) {
+            .quiz-screen {
+                overflow: hidden;
+            }
         }
 
         .quiz-header {
@@ -160,9 +181,15 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             height: calc(100vh - 95px);
-            max-height: calc(100vh - 95px);
             gap: 0;
-            overflow: hidden;
+        }
+
+        /* 가로 모드에서만 최대 높이 제한 */
+        @media (orientation: landscape) and (min-width: 768px) {
+            .quiz-container {
+                max-height: calc(100vh - 95px);
+                overflow: hidden;
+            }
         }
 
         .quiz-item {
@@ -251,7 +278,13 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+        }
+
+        /* 가로 모드에서만 overflow hidden */
+        @media (orientation: landscape) and (min-width: 768px) {
+            .complete-screen {
+                overflow: hidden;
+            }
         }
 
         .complete-content {
@@ -259,7 +292,13 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            max-height: 100%;
+        }
+
+        /* 가로 모드에서만 최대 높이 제한 */
+        @media (orientation: landscape) and (min-width: 768px) {
+            .complete-content {
+                max-height: 100%;
+            }
         }
 
         .qr-code {
@@ -317,6 +356,7 @@
             .quiz-container {
                 grid-template-columns: 1fr;
                 height: auto;
+                min-height: 100vh;
             }
 
             .quiz-left {
@@ -351,6 +391,20 @@
 
             .question-text {
                 font-size: 16px;
+            }
+
+            .complete-screen {
+                padding: 30px 20px;
+            }
+
+            .qr-code {
+                width: 180px;
+                height: 180px;
+                margin: 20px auto 15px;
+            }
+
+            .complete-text {
+                font-size: 18px;
             }
         }
     </style>
