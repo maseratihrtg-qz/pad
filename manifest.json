@@ -9,7 +9,7 @@
   "orientation": "landscape",
   "icons": [
     {
-      "src": "img/trident_mobile_white.svg",
+      "src": "img/icon-180.png",
       "sizes": "any",
       "type": "image/svg+xml"
     },
@@ -30,3 +30,4 @@
     }
   ]
 }
+
