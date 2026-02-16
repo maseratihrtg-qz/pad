@@ -35,12 +35,16 @@
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 30px;
             margin: 40px 0;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 16px;
         }
 
         .preview-item {
             background: #2a2a2a;
             padding: 30px;
             border-radius: 12px;
+            border: 2px solid #3a3a3a;
         }
 
         canvas {
@@ -48,6 +52,7 @@
             margin: 20px auto;
             background: #000;
             border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
         .size-label {
@@ -193,16 +198,25 @@
                     const canvas = document.getElementById(`canvas${size}`);
                     const ctx = canvas.getContext('2d');
                     
-                    // 검정 배경
+                    // 검정 배경 (중요!)
                     ctx.fillStyle = '#000000';
                     ctx.fillRect(0, 0, size, size);
                     
-                    // 로고를 중앙에 배치 (약간 작게)
-                    const padding = size * 0.1;
+                    // 로고를 중앙에 배치 (패딩 적용)
+                    const padding = size * 0.15;
                     const logoSize = size - (padding * 2);
-                    ctx.drawImage(img, padding, padding, logoSize, logoSize);
+                    const x = (size - logoSize) / 2;
+                    const y = (size - logoSize) / 2;
+                    
+                    ctx.drawImage(img, x, y, logoSize, logoSize);
                 });
 
+                URL.revokeObjectURL(url);
+                alert('아이콘 생성 완료! 각 다운로드 버튼을 눌러주세요.');
+            };
+
+            img.onerror = function() {
+                alert('SVG 파일을 불러오는데 실패했습니다.');
                 URL.revokeObjectURL(url);
             };
 
@@ -211,6 +225,11 @@
 
         function downloadIcon(size) {
             const canvas = document.getElementById(`canvas${size}`);
+            if (!canvas || canvas.width === 0) {
+                alert('먼저 SVG 파일을 선택해주세요!');
+                return;
+            }
+            
             canvas.toBlob(function(blob) {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -218,6 +237,8 @@
                 a.download = `icon-${size}.png`;
                 a.click();
                 URL.revokeObjectURL(url);
+                
+                console.log(`icon-${size}.png 다운로드 완료`);
             });
         }
     </script>
