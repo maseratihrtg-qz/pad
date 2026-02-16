@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>MASERATI QUIZ - LA CASA DI MASERATI</title>
+    
+    <!-- PWA 설정 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="MASERATI QUIZ">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- 홈화면 아이콘 -->
+    <link rel="apple-touch-icon" href="img/trident_mobile_white.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/icon-180.png">
+    <link rel="icon" type="image/svg+xml" href="img/trident_mobile_white.svg">
+    <link rel="manifest" href="manifest.json">
+    
     <style>
         * {
             margin: 0;
@@ -218,7 +231,7 @@
         .complete-screen {
             display: none;
             text-align: center;
-            padding: 80px 60px;
+            padding: 40px 60px;
             width: 100%;
             height: 100%;
             flex-direction: column;
@@ -226,18 +239,11 @@
             align-items: center;
         }
 
-        .complete-screen .quiz-header {
-            border-bottom: none;
-            margin-bottom: 40px;
-        }
-
         .complete-content {
-            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding-bottom: 60px;
         }
 
         .qr-code {
@@ -360,11 +366,6 @@
 
         <!-- 완료 화면 -->
         <div class="complete-screen" id="completeScreen">
-            <div class="quiz-header">
-                <img src="img/trident_mobile_white.svg" alt="Maserati Logo" class="logo">
-                <div class="brand-name">Maserati</div>
-                <div class="title">LA CASA DI MASERATI</div>
-            </div>
             <div class="complete-content">
                 <div class="score-display" id="scoreDisplay">총 3문제 중 3문제를 맞추셨습니다!</div>
                 <div class="qr-code">
