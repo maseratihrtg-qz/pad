@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>MASERATI QUIZ - LA CASA DI MASERATI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            max-width: 1024px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 시작 화면 */
+        .start-screen {
+            text-align: center;
+            background: radial-gradient(ellipse at center, rgba(65, 105, 225, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            padding: 80px 60px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-container {
+            margin-bottom: 60px;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+        }
+
+        .brand-name {
+            font-size: 16px;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .title {
+            font-size: 24px;
+            letter-spacing: 3px;
+            margin-bottom: 0;
+            font-weight: 300;
+            opacity: 0.95;
+        }
+
+        .main-title {
+            font-size: 64px;
+            font-weight: 300;
+            letter-spacing: 8px;
+            margin-bottom: 80px;
+            text-transform: uppercase;
+        }
+
+        .start-button {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            padding: 18px 80px;
+            border-radius: 40px;
+            font-size: 16px;
+            cursor: pointer;
+            letter-spacing: 3px;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .start-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        /* 퀴즈 화면 */
+        .quiz-screen {
+            display: none;
+            background: #000000;
+            width: 100%;
+            height: 100%;
+        }
+
+        .quiz-header {
+            text-align: center;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quiz-header .logo {
+            width: 45px;
+            margin-bottom: 6px;
+        }
+
+        .quiz-header .brand-name {
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+
+        .quiz-header .title {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        .quiz-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: calc(100vh - 95px);
+            max-height: 800px;
+            gap: 0;
+        }
+
+        .quiz-item {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .quiz-left {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+        }
+
+        .quiz-image {
+            width: 100%;
+            max-width: 380px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .quiz-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+        }
+
+        .question-number {
+            font-size: 48px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .question-text {
+            font-size: 20px;
+            line-height: 1.6;
+            margin-bottom: 60px;
+            opacity: 0.85;
+            font-weight: 300;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .quiz-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .quiz-button {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            padding: 16px 50px;
+            border-radius: 40px;
+            font-size: 16px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 300;
+            text-transform: uppercase;
+        }
+
+        .quiz-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            transform: translateX(5px);
+        }
+
+        /* 완료 화면 */
+        .complete-screen {
+            display: none;
+            text-align: center;
+            padding: 80px 60px;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .complete-screen .quiz-header {
+            border-bottom: none;
+            margin-bottom: 40px;
+        }
+
+        .complete-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 60px;
+        }
+
+        .qr-code {
+            width: 240px;
+            height: 240px;
+            margin: 30px auto 20px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 50px rgba(255, 255, 255, 0.1);
+        }
+
+        .complete-text {
+            font-size: 22px;
+            line-height: 2;
+            margin: 20px 0 30px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .score-display {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #d4af37;
+            font-weight: 400;
+        }
+
+        .restart-button {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            padding: 15px 60px;
+            border-radius: 40px;
+            font-size: 15px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            font-weight: 300;
+            margin-top: 10px;
+        }
+
+        .restart-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* 아이패드 세로 모드 */
+        @media (max-width: 834px) and (orientation: portrait) {
+            .quiz-container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .quiz-left {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                padding: 40px;
+            }
+
+            .quiz-right {
+                padding: 40px;
+            }
+
+            .main-title {
+                font-size: 48px;
+            }
+
+            .quiz-image {
+                max-width: 300px;
+            }
+        }
+
+        /* 작은 화면 */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 36px;
+                letter-spacing: 4px;
+            }
+
+            .quiz-item {
+                padding: 30px;
+            }
+
+            .question-text {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 시작 화면 -->
+        <div class="start-screen" id="startScreen">
+            <div class="logo-container">
+                <img src="img/trident_mobile_white.svg" alt="Maserati Logo" class="logo">
+                <div class="brand-name">Maserati</div>
+                <div class="title">LA CASA DI MASERATI</div>
+            </div>
+            <div class="main-title">MASERATI QUIZ</div>
+            <button class="start-button" onclick="startQuiz()">TAP TO START</button>
+        </div>
+
+        <!-- 퀴즈 화면 -->
+        <div class="quiz-screen" id="quizScreen">
+            <div class="quiz-header">
+                <img src="img/trident_mobile_white.svg" alt="Maserati Logo" class="logo">
+                <div class="brand-name">Maserati</div>
+                <div class="title">LA CASA DI MASERATI</div>
+            </div>
+            <div class="quiz-container" id="quizContainer">
+                <!-- 퀴즈 내용이 동적으로 들어갑니다 -->
+            </div>
+        </div>
+
+        <!-- 완료 화면 -->
+        <div class="complete-screen" id="completeScreen">
+            <div class="quiz-header">
+                <img src="img/trident_mobile_white.svg" alt="Maserati Logo" class="logo">
+                <div class="brand-name">Maserati</div>
+                <div class="title">LA CASA DI MASERATI</div>
+            </div>
+            <div class="complete-content">
+                <div class="score-display" id="scoreDisplay">총 3문제 중 3문제를 맞추셨습니다!</div>
+                <div class="qr-code">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- QR 코드 패턴 -->
+                        <rect x="0" y="0" width="200" height="200" fill="white"/>
+                        <rect x="10" y="10" width="40" height="40" fill="black"/>
+                        <rect x="150" y="10" width="40" height="40" fill="black"/>
+                        <rect x="10" y="150" width="40" height="40" fill="black"/>
+                        <rect x="70" y="70" width="60" height="60" fill="black"/>
+                    </svg>
+                </div>
+                <div class="complete-text">
+                    본 화면을 직원에게 보여주시고<br>
+                    선물을 수령해주세요.
+                </div>
+                <button class="restart-button" onclick="restartQuiz()">처음으로 돌아가기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('Script loaded');
+
+        // LocalStorage에서 퀴즈 데이터 로드
+        let quizData = [];
+        let headerSettings = {
+            logoUrl: 'img/trident_mobile_white.svg',
+            brandName: 'Maserati',
+            headerTitle: 'LA CASA DI MASERATI'
+        };
+        
+        function loadQuizData() {
+            const savedData = localStorage.getItem('maseratiQuizData');
+            if (savedData) {
+                quizData = JSON.parse(savedData);
+                console.log('Loaded quiz data:', quizData);
+            } else {
+                // 기본 퀴즈 데이터
+                quizData = [
+                    {
+                        question: "Q1.",
+                        text: "마세라티의 상징인 트라이던트는 이탈리아의 유서깊은 마조레광장의 넵튠 분수의 삼지창에서 유래되었다.",
+                        image: "https://images.unsplash.com/photo-1623346726449-dd71e61d6a40?w=800&h=600&fit=crop",
+                        correctAnswer: true,
+                        userAnswer: null
+                    },
+                    {
+                        question: "Q2.",
+                        text: "이탈리아 모데나에 위치한 프리미엄 자동차 제조사인 마세라티는 올해로 112주년을 맞이하였다.",
+                        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect fill='%23000' width='800' height='600'/%3E%3Crect fill='%234169e1' x='100' y='150' width='600' height='300' opacity='0.2'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='120' fill='%23d4af37' font-weight='bold'%3E1914%3C/text%3E%3C/svg%3E",
+                        correctAnswer: true,
+                        userAnswer: null
+                    },
+                    {
+                        question: "Q3.",
+                        text: "마세라티의 하이브리드 순수 전기차 라인업의 이름은 'Folgore'이며 이탈리아어로 '번개'를 뜻한다.",
+                        image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&h=600&fit=crop",
+                        correctAnswer: true,
+                        userAnswer: null
+                    }
+                ];
+            }
+        }
+
+        function loadHeaderSettings() {
+            const savedSettings = localStorage.getItem('maseratiHeaderSettings');
+            if (savedSettings) {
+                headerSettings = JSON.parse(savedSettings);
+                console.log('Loaded header settings:', headerSettings);
+            }
+        }
+
+        function updateHeaderElements() {
+            // 모든 로고 이미지 업데이트
+            const logos = document.querySelectorAll('.logo');
+            logos.forEach(logo => {
+                logo.src = headerSettings.logoUrl;
+            });
+
+            // 모든 브랜드명 업데이트
+            const brandNames = document.querySelectorAll('.brand-name');
+            brandNames.forEach(name => {
+                name.textContent = headerSettings.brandName;
+            });
+
+            // 모든 타이틀 업데이트
+            const titles = document.querySelectorAll('.title');
+            titles.forEach(title => {
+                title.textContent = headerSettings.headerTitle;
+            });
+        }
+
+        loadQuizData();
+        loadHeaderSettings();
+        updateHeaderElements();
+
+        let currentQuiz = 0;
+        let correctCount = 0;
+
+        function startQuiz() {
+            console.log('Start Quiz clicked');
+            const startScreen = document.getElementById('startScreen');
+            const quizScreen = document.getElementById('quizScreen');
+            
+            startScreen.style.display = 'none';
+            quizScreen.style.display = 'block';
+            
+            // 초기화
+            currentQuiz = 0;
+            correctCount = 0;
+            quizData.forEach(q => q.userAnswer = null);
+            
+            showQuiz(0);
+        }
+
+        function showQuiz(index) {
+            console.log('showQuiz called with index:', index);
+            if (index >= quizData.length) {
+                showComplete();
+                return;
+            }
+
+            currentQuiz = index;
+            const quiz = quizData[index];
+            const container = document.getElementById('quizContainer');
+            
+            console.log('Showing quiz:', quiz);
+
+            container.innerHTML = `
+                <div class="quiz-item quiz-left">
+                    <img src="${quiz.image}" alt="Quiz Image" class="quiz-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23111%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2220%22 fill=%22%23666%22%3EImage%3C/text%3E%3C/svg%3E'">
+                </div>
+                <div class="quiz-item quiz-right">
+                    <div class="question-number">${quiz.question}</div>
+                    <div class="question-text">${quiz.text}</div>
+                    <div class="quiz-buttons">
+                        <button class="quiz-button" onclick="answerQuiz(true)">YES</button>
+                        <button class="quiz-button" onclick="answerQuiz(false)">NO</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function answerQuiz(answer) {
+            console.log('Answer:', answer);
+            quizData[currentQuiz].userAnswer = answer;
+            
+            // 정답 확인
+            if (answer === quizData[currentQuiz].correctAnswer) {
+                correctCount++;
+            }
+            
+            showQuiz(currentQuiz + 1);
+        }
+
+        function showComplete() {
+            console.log('Showing complete screen');
+            const quizScreen = document.getElementById('quizScreen');
+            const completeScreen = document.getElementById('completeScreen');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            
+            quizScreen.style.display = 'none';
+            completeScreen.style.display = 'flex';
+            
+            scoreDisplay.textContent = `총 ${quizData.length}문제 중 ${correctCount}문제를 맞추셨습니다!`;
+        }
+
+        function restartQuiz() {
+            console.log('Restart quiz');
+            const completeScreen = document.getElementById('completeScreen');
+            const startScreen = document.getElementById('startScreen');
+            
+            completeScreen.style.display = 'none';
+            startScreen.style.display = 'flex';
+            
+            // 초기화
+            currentQuiz = 0;
+            correctCount = 0;
+            quizData.forEach(q => q.userAnswer = null);
+        }
+
+        // 페이지 로드 확인
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded');
+        });
+    </script>
+</body>
+</html>
