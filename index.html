@@ -9,7 +9,7 @@
     
     <!-- PWA 설정 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="MASERATI QUIZ">
     <meta name="theme-color" content="#000000">
     
@@ -40,35 +40,34 @@
             box-sizing: border-box;
         }
 
-        html, body{
+        html, body {
+            margin: 0;
+            
             width: 100%;
             height: 100%;
         
-            background: #000;
-        
-            padding-top: env(safe-area-inset-top);
+            min-height: 100vh;
         }
         
         /* 가로 모드에서만 overflow hidden */
         @media (orientation: landscape) {
-            html, body{
+            html, body {
                 overflow: hidden;
             }
         }
 
-        body{
-            font-family: 'NotoSansKR', 'GothicBI', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a1e3d;
+        body {font-family: 'NotoSansKR', 'GothicBI', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000000;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            
+            
+            
             color: white;
         }
         
         /* 가로 모드에서만 overflow 고정 */
         @media (orientation: landscape) {
-            body{
+            body {
                 overflow: hidden;
                 position: fixed;
                 top: 0;
@@ -80,7 +79,7 @@
 
         /* 가로 모드 전용 - 스크롤 완전 방지 */
         @media (orientation: landscape) {
-            html, body{
+            html, body {
                 overflow: hidden;
                 position: fixed;
                 width: 100%;
@@ -108,18 +107,19 @@
 
         /* 시작 화면 */
         .start-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 5;
+
             text-align: center;
-            padding: calc(80px + env(safe-area-inset-top)) 60px 80px;
+            padding: calc(80px + env(safe-area-inset-top)) 60px 80px 60px;
             width: 100%;
             height: 100%;
+
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-
-            /* ✅ 상태바 뒤까지 배경이 보이도록 전체 화면 고정 */
-            position: fixed;
-            inset: 0;
 
             background-image: url('img/Image/Q0_MaseratiMCPURACielo.jpg');
             background-size: cover;
@@ -185,12 +185,14 @@
 
         /* 퀴즈 화면 */
         .quiz-screen {
+            position: fixed;
+            inset: 0;
+            padding-top: env(safe-area-inset-top);
+
             display: none;
             background: #0a1e3d;
             width: 100vw;
             height: 100vh;
-            padding-top: env(safe-area-inset-top);
-            box-sizing: border-box;
         }
         
         /* 가로 모드에서만 overflow hidden */
@@ -643,6 +645,10 @@
 
         /* 완료 화면 */
         .complete-screen {
+            position: fixed;
+            inset: 0;
+            padding-top: env(safe-area-inset-top);
+
             display: none;
             text-align: center;
             padding: 40px 60px;
