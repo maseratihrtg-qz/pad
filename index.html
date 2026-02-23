@@ -659,6 +659,7 @@
             justify-content: center;
             align-items: center;
             background: #0a1e3d;   /* 🔥 네이비 추가 */
+            
         }
 
         /* 가로 모드에서만 overflow hidden */
@@ -669,10 +670,7 @@
         }
 
         .complete-content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            margin-top: 30vh;
         }
 
         /* 가로 모드에서만 최대 높이 제한 */
@@ -719,12 +717,12 @@
             border: 2px solid rgba(255, 255, 255, 0.8);
             padding: 15px 60px;
             border-radius: 40px;
-            font-size: 15px;
+            font-size: 20px;
             cursor: pointer;
             transition: all 0.4s ease;
             text-transform: uppercase;
             font-weight: 300;
-            margin-top: 10px;
+            margin-top: 100px;
         }
 
         .restart-button:hover {
@@ -820,11 +818,12 @@
 
         <!-- 완료 화면 -->
         <div class="complete-screen" id="completeScreen">
+            <div class="quiz-header">
+                <img src="img/Logo/Logo.png" alt="Maserati Logo" class="logo">
+                <div class="title">LA CASA DI MASERATI</div>
+            </div>
             <div class="complete-content">
                 <div class="score-display" id="scoreDisplay">총 3문제 중 3문제를 맞추셨습니다!</div>
-                <div class="qr-code">
-                    <img id="rewardImage" alt="reward" />
-                </div>
                 <div class="complete-text">
                     본 화면을 직원에게 보여주시고<br>
                     선물을 수령해주세요.
