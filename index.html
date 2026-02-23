@@ -2,12 +2,14 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MASERATI QUIZ - LA CASA DI MASERATI</title>
     
     <!-- PWA 설정 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="MASERATI QUIZ">
     <meta name="theme-color" content="#000000">
     
@@ -38,22 +40,23 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html, body{
             width: 100%;
             height: 100%;
+        
+            background: #000;
+        
+            padding-top: env(safe-area-inset-top);
         }
         
         /* 가로 모드에서만 overflow hidden */
         @media (orientation: landscape) {
-            html, body {
+            html, body{
                 overflow: hidden;
             }
         }
 
-        body {
-            /* 화면별로 상태바(배경) 색을 바꾸기 위한 변수 */
-            --statusbar-bg: #000000;
-            --page-bg: #0a1e3d;
+        body{
             font-family: 'NotoSansKR', 'GothicBI', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #0a1e3d;
             min-height: 100vh;
@@ -62,37 +65,10 @@
             align-items: center;
             color: white;
         }
-
-        /* ✅ iPad 홈화면(PWA)에서 상태바는 '투명(black-translucent)'로 두고,
-           상태바 뒤 배경은 이 오버레이로 화면별로 바꿉니다. */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: env(safe-area-inset-top);
-            background: var(--statusbar-bg);
-            z-index: 9999;
-            pointer-events: none;
-        }
-
-        /* 기본(퀴즈/결과): 네이비 */
-        body.mode-quiz {
-            --statusbar-bg: #0a1e3d;
-            background: #0a1e3d;
-        }
-
-        /* 시작 화면: 블랙 */
-        body.mode-start {
-            --statusbar-bg: #000000;
-            background: #000000;
-        }
-
         
         /* 가로 모드에서만 overflow 고정 */
         @media (orientation: landscape) {
-            body {
+            body{
                 overflow: hidden;
                 position: fixed;
                 top: 0;
@@ -104,7 +80,7 @@
 
         /* 가로 모드 전용 - 스크롤 완전 방지 */
         @media (orientation: landscape) {
-            html, body {
+            html, body{
                 overflow: hidden;
                 position: fixed;
                 width: 100%;
@@ -133,14 +109,20 @@
         /* 시작 화면 */
         .start-screen {
             text-align: center;
-            padding: 80px 60px;
+            padding: calc(80px + env(safe-area-inset-top)) 60px 80px;
             width: 100%;
             height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-image: url('img/Image/Q0_MaseratiMCPURACielo.jpg');      background-size: cover;
+
+            /* ✅ 상태바 뒤까지 배경이 보이도록 전체 화면 고정 */
+            position: fixed;
+            inset: 0;
+
+            background-image: url('img/Image/Q0_MaseratiMCPURACielo.jpg');
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
@@ -207,6 +189,8 @@
             background: #0a1e3d;
             width: 100vw;
             height: 100vh;
+            padding-top: env(safe-area-inset-top);
+            box-sizing: border-box;
         }
         
         /* 가로 모드에서만 overflow hidden */
@@ -804,7 +788,7 @@
         }
     </style>
 </head>
-<body class="mode-start">
+<body>
     <div class="container">
         <!-- 시작 화면 -->
         <div class="start-screen" id="startScreen">
@@ -966,12 +950,6 @@
         let currentQuiz = 0;
         let correctCount = 0;
 
-        // ✅ 화면 전환 시 상태바 배경(오버레이) 색도 함께 전환
-        function setMode(mode){
-            document.body.classList.remove('mode-start','mode-quiz');
-            document.body.classList.add(mode);
-        }
-
         function startQuiz() {
             console.log('Start Quiz clicked');
             const startScreen = document.getElementById('startScreen');
@@ -979,7 +957,6 @@
             
             startScreen.style.display = 'none';
             quizScreen.style.display = 'block';
-            setMode('mode-quiz');
             
             // 초기화
             currentQuiz = 0;
@@ -1037,7 +1014,6 @@
             
             quizScreen.style.display = 'none';
             completeScreen.style.display = 'flex';
-            setMode('mode-quiz');
             
             scoreDisplay.textContent = `총 ${quizData.length}문제 중 ${correctCount}문제를 맞추셨습니다!`;
             showRandomImage();
@@ -1050,7 +1026,6 @@
             
             completeScreen.style.display = 'none';
             startScreen.style.display = 'flex';
-            setMode('mode-start');
             
             // 초기화
             currentQuiz = 0;
