@@ -46,7 +46,9 @@
             width: 100%;
             height: 100%;
         
-            min-height: 100vh;
+            min-height: 100dvh;
+        
+            overflow-x: hidden;
         }
         
         /* 가로 모드에서만 overflow hidden */
@@ -58,7 +60,7 @@
 
         body {font-family: 'NotoSansKR', 'GothicBI', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #000000;
-            min-height: 100vh;
+            min-height: 100dvh;
             
             
             
@@ -89,7 +91,7 @@
 
         .container {
             width: 100vw;
-            height: 100vh;
+            height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -101,7 +103,7 @@
                 overflow: hidden;
                 position: fixed;
                 top: 0;
-                left: 200;
+                left: 0;
             }
         }
 
@@ -192,7 +194,7 @@
             display: none;
             background: #0a1e3d;
             width: 100vw;
-            height: 100vh;
+            height: 100dvh;
         }
         
         /* 가로 모드에서만 overflow hidden */
@@ -209,14 +211,14 @@
         @media (orientation: portrait) {
             .quiz-screen {
                 height: auto;
-                min-height: 100vh;
+                min-height: 100dvh;
                 overflow-y: auto;
             }
         }
 
         .quiz-header {
             position: absolute;
-            top: 50px;
+            top: calc(50px + env(safe-area-inset-top));
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
@@ -249,11 +251,11 @@
         .quiz-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            height: 100vh;
+            height: 100dvh;
             width: 100vw;
             gap: 0;
             overflow: hidden;
-            padding-top: 80px;
+            padding-top: calc(80px + env(safe-area-inset-top));
         }
 
         .quiz-item {
@@ -261,7 +263,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100dvh;
             overflow: hidden;
         }
 
@@ -289,7 +291,7 @@
             justify-content: center;
             align-items: flex-start;
             padding: 100px 80px 80px 80px;
-            height: 100vh;
+            height: 100dvh;
             overflow: hidden;
         }
 
@@ -519,7 +521,7 @@
                 grid-template-columns: 1fr;
                 grid-template-rows: auto auto;
                 height: auto;
-                min-height: 100vh;
+                min-height: 100dvh;
                 overflow-y: auto;
             }
             
@@ -741,7 +743,7 @@
             .quiz-container {
                 grid-template-columns: 1fr;
                 height: auto;
-                min-height: 100vh;
+                min-height: 100dvh;
             }
 
             .quiz-left {
